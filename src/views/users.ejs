@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>All users</h1>
+    <a href="/">Home</a>
+    <br />
+    <% response = JSON.parse(response) %> <% response.map((user) => { %>
+    <p>First Name:<%= user.firstName %></p>
+    <p>Last Name:<%= user.lastName %></p>
+    <p>Age:<%= user.age %></p>
+    <a data-method="GET" href="/users/<%= user.id %>">Edit this user</a>
+    <a onclick="deleteUser('<%= user.id %>')" href="/users.ejs">Delete</a>
+    <br /><br />
+    <% }) %>
+
+    <script>
+      //const deleteBtn = document.getElementById("deleteBtn");
+
+      //deleteBtn.addEventListener("click", (e) => {});
+
+      function deleteUser(id) {
+        fetch(`http://localhost:8080/users/${Number(id)}`, {
+          method: "DELETE",
+        });
+      }
+    </script>
+  </body>
+</html>

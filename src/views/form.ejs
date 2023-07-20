@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>User Form</h1>
+    <a href="../users.ejs">Users List</a>
+    <br />
+    <a href="/">Home</a>
+    <br />
+    <br />
+    <% response ? response = JSON.parse(response) : null%> <%
+    console.log(response) %>
+    <form id="form" action="<%= response ? '/users/'+response.id : '/users' %>">
+      <label method="POST" for="firstName">First Name:</label>
+      <input
+        type="text"
+        name="firstName"
+        id="firstName"
+        value="<%= response ? response.firstName : '' %>"
+      />
+      <br />
+      <label for="lastName">Last Name:</label>
+      <input
+        type="text"
+        name="lastName"
+        id="lastName"
+        value="<%= response ? response.lastName : '' %>"
+      />
+      <br />
+      <label for="age">Age:</label>
+      <input
+        type="number"
+        name="age"
+        id="age"
+        value="<%= response ? response.age : '' %>"
+      />
+      <input
+        id="btn"
+        type="submit"
+        value="<%= response ? 'edit' : 'submit' %>"
+      />
+    </form>
+
+    <script>
+      const btn = document.getElementById("btn");
+      const form = document.getElementById("form");
+
+      if ("<%= response.firstName %>") {
+        form.setAttribute("method", "POST");
+        form.insertAdjacentHTML(
+          "afterbegin",
+          '<input type="hidden" name="_method" value="PATCH">'
+        );
+      } else {
+        form.setAttribute("method", "POST");
+      }
+
+      fetch(`http://localhost:8080/users/${id}`);
+    </script>
+  </body>
+</html>
